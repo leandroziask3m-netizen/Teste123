@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LeandroTec — Acesso</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  /* ===== Surface ===== */
+  --bg:#E0E5EC;
+
+  /* ===== Text ===== */
+  --ink:#3D4852;
+  --ink-soft:#6B7280;
+
+  /* ===== Accent palette ===== */
+  --accent:#6C63FF;
+  --accent-light:#8B84FF;
+  --accent-secondary:#38B2AC;
+  --accent-secondary-text:#0d9488;
+  --danger:#E0556B;
+
+  /* ===== Shadow recipes ===== */
+  --sh-ext:9px 9px 16px rgba(163,177,198,0.6), -9px -9px 16px rgba(255,255,255,0.65);
+  --sh-ext-hover:14px 14px 26px rgba(163,177,198,0.65), -14px -14px 26px rgba(255,255,255,0.7);
+  --sh-ext-sm:5px 5px 10px rgba(163,177,198,0.55), -5px -5px 10px rgba(255,255,255,0.6);
+  --sh-inset:inset 6px 6px 10px rgba(163,177,198,0.55), inset -6px -6px 10px rgba(255,255,255,0.6);
+  --sh-inset-deep:inset 12px 12px 22px rgba(163,177,198,0.65), inset -12px -12px 22px rgba(255,255,255,0.7);
+  --sh-inset-sm:inset 3px 3px 6px rgba(163,177,198,0.5), inset -3px -3px 6px rgba(255,255,255,0.55);
+}
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+body{
+  min-height:100vh;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'DM Sans', sans-serif;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:32px;
+}
+
+.shell{
+  width:100%;
+  max-width:960px;
+  display:grid;
+  grid-template-columns:1.05fr 1fr;
+  background:var(--bg);
+  border-radius:32px;
+  overflow:hidden;
+  box-shadow:var(--sh-ext-hover);
+}
+
+@media(max-width:760px){
+  .shell{ grid-template-columns:1fr; }
+  .brand{ min-height:auto; }
+}
+
+/* === BRAND (recessed plaque) === */
+.brand{
+  background:var(--bg);
+  box-shadow:var(--sh-inset-deep);
+  margin:14px 7px 14px 14px;
+  border-radius:26px;
+  padding:46px 40px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  position:relative;
+}
+
+@media(max-width:760px){
+  .brand{ margin:14px 14px 7px 14px; }
+}
+
+.brand-mark{ position:relative; }
+.brand-logo{ display:block; width:100%; max-width:180px; height:auto; }
+
+.brand-title{ position:relative; margin-top:28px; }
+.brand-title h1{
+  font-family:'Plus Jakarta Sans', sans-serif;
+  font-weight:800; font-size:30px; line-height:1.25;
+  letter-spacing:-0.01em;
+  margin:0 0 14px;
+  color:var(--ink);
+}
+.brand-title h1 em{ font-style:normal; color:var(--accent); }
+
+.brand-title p{
+  font-size:13.5px; line-height:1.65;
+  color:var(--ink-soft); max-width:280px;
+}
+
+.brand-features{ position:relative; display:flex; flex-direction:column; gap:11px; margin-top:24px; }
+.brand-feature{
+  display:flex; align-items:center; gap:10px;
+  font-size:12.5px; color:var(--ink-soft); font-weight:500;
+}
+.brand-feature .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent-secondary); flex-shrink:0; box-shadow:0 0 6px rgba(56,178,172,0.6); }
+
+.brand-coord{
+  position:relative;
+  font-family:'JetBrains Mono', monospace;
+  font-size:11px; color:var(--ink-soft);
+  opacity:0.7;
+  letter-spacing:0.04em;
+  margin-top:18px;
+}
+
+/* === PAINEL === */
+.panel{
+  padding:50px 46px 46px;
+  display:flex;
+  flex-direction:column;
+}
+
+.panel-header{ margin-bottom:30px; }
+.panel-header h2{ font-family:'Plus Jakarta Sans', sans-serif; font-size:24px; font-weight:800; letter-spacing:-0.01em; color:var(--ink); }
+.panel-header p{ font-size:13.5px; color:var(--ink-soft); margin-top:6px; }
+
+.tabs{
+  display:flex; gap:4px;
+  background:var(--bg);
+  box-shadow:var(--sh-inset-sm);
+  border-radius:14px;
+  padding:5px;
+  margin-bottom:30px;
+}
+.tab{
+  flex:1;
+  border:none; background:none;
+  border-radius:11px;
+  font-family:'DM Sans', sans-serif; font-size:13.5px; font-weight:700;
+  color:var(--ink-soft);
+  padding:10px 0;
+  cursor:pointer;
+  transition:all 0.25s ease-out;
+}
+.tab.active{ color:var(--accent); background:var(--bg); box-shadow:var(--sh-ext-sm); }
+
+.form-group{ display:none; flex-direction:column; gap:18px; }
+.form-group.active{ display:flex; }
+
+.field{ display:flex; flex-direction:column; gap:7px; }
+label{ font-size:11.5px; font-weight:700; color:var(--ink-soft); letter-spacing:0.02em; }
+
+input{
+  width:100%; padding:13px 15px;
+  border-radius:14px; border:none;
+  background:var(--bg); color:var(--ink);
+  box-shadow:var(--sh-inset);
+  font-family:'DM Sans', sans-serif; font-size:14.5px;
+  transition:box-shadow 0.2s;
+}
+input:focus{
+  outline:none;
+  box-shadow:var(--sh-inset-deep), 0 0 0 3px rgba(108,99,255,0.18);
+}
+
+button.primary{
+  width:100%; padding:14px;
+  border:none; border-radius:14px;
+  background:var(--accent); color:#fff;
+  box-shadow:7px 7px 14px rgba(108,99,255,0.35), -7px -7px 14px rgba(255,255,255,0.55);
+  font-family:'DM Sans', sans-serif; font-size:14.5px; font-weight:700;
+  cursor:pointer;
+  transition:all 0.25s ease-out;
+  margin-top:6px;
+}
+button.primary:hover{ background:var(--accent-light); transform:translateY(-1px); box-shadow:9px 9px 18px rgba(108,99,255,0.4), -9px -9px 18px rgba(255,255,255,0.6); }
+button.primary:active{ transform:translateY(0.5px); box-shadow:inset 5px 5px 10px rgba(74,66,200,0.4), inset -5px -5px 10px rgba(150,140,255,0.3); }
+button.primary:disabled{ background:var(--bg); color:var(--ink-soft); box-shadow:var(--sh-inset-sm); cursor:not-allowed; }
+
+.hint{ font-size:12px; color:var(--ink-soft); line-height:1.5; }
+
+.msg{ font-size:13px; font-weight:600; min-height:18px; }
+.msg.ok{ color:var(--accent-secondary-text); }
+.msg.err{ color:var(--danger); }
+</style>
+</head>
+
+<body>
+<div class="shell">
+
+  <div class="brand">
+    <div class="brand-mark">
+      <img src="logo.png" alt="LeandroTec" class="brand-logo">
+    </div>
+
+    <div class="brand-title">
+      <h1>Gestão de áreas <em>agrícolas</em> em tempo real.</h1>
+      <p>Cadastre talhões, rastreie máquinas em campo e monitore as condições climáticas em um único painel.</p>
+    </div>
+
+    <div class="brand-features">
+      <div class="brand-feature"><span class="dot"></span>Rastreamento GPS de máquinas</div>
+      <div class="brand-feature"><span class="dot"></span>Clima em tempo real por área</div>
+      <div class="brand-feature"><span class="dot"></span>Mapa satelital integrado</div>
+      <div class="brand-coord">-15.7801, -47.9292 · Cerrado BR</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <h2>Bem-vindo</h2>
+      <p>Acesse sua conta ou crie uma nova.</p>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" id="tabLogin" onclick="switchTab('login')">Entrar</button>
+      <button class="tab" id="tabRegister" onclick="switchTab('register')">Criar conta</button>
+    </div>
+
+    <div class="form-group active" id="formLogin">
+      <div class="field">
+        <label for="user2">Usuário</label>
+        <input id="user2" placeholder="seu usuário" autocomplete="username">
+      </div>
+      <div class="field">
+        <label for="pass2">Senha</label>
+        <input id="pass2" type="password" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <button class="primary" id="btnLogin" onclick="login()">Entrar</button>
+    </div>
+
+    <div class="form-group" id="formRegister">
+      <div class="field">
+        <label for="user">Usuário</label>
+        <input id="user" placeholder="escolha um usuário" autocomplete="username">
+      </div>
+      <div class="field">
+        <label for="pass">Senha</label>
+        <input id="pass" type="password" placeholder="mínimo 4 caracteres" autocomplete="new-password">
+      </div>
+      <p class="hint">Sua senha é armazenada com hash — nem mesmo o administrador consegue lê-la.</p>
+      <button class="primary" id="btnRegister" onclick="register()">Criar conta</button>
+    </div>
+
+    <p class="msg" id="msg" style="margin-top:16px;"></p>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   CONFIGURAÇÃO — troque pela URL do Render após hospedar:
+   const API = "https://leandrotec-api.onrender.com";
+============================================================ */
+const API = "http://127.0.0.1:8000";
+
+function switchTab(which){
+  document.getElementById("tabLogin").classList.toggle("active", which==="login");
+  document.getElementById("tabRegister").classList.toggle("active", which==="register");
+  document.getElementById("formLogin").classList.toggle("active", which==="login");
+  document.getElementById("formRegister").classList.toggle("active", which==="register");
+  setMsg("","");
+}
+
+function setMsg(text, kind){
+  const el=document.getElementById("msg");
+  el.innerText=text;
+  el.className="msg"+(kind?" "+kind:"");
+}
+
+function setLoading(btn, loading, idleLabel){
+  btn.disabled=loading;
+  btn.innerText=loading?"Aguarde...":idleLabel;
+}
+
+async function register(){
+  const btn=document.getElementById("btnRegister");
+  const u=document.getElementById("user").value.trim();
+  const p=document.getElementById("pass").value;
+  if(!u||!p){ setMsg("Preencha usuário e senha.","err"); return; }
+  setLoading(btn,true);
+  try{
+    const r=await fetch(API+"/register",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({username:u, password:p})
+    });
+    const data=await r.json();
+    if(!r.ok){ setMsg(data.detail||"Não foi possível criar a conta.","err"); return; }
+    setMsg("Conta criada com sucesso. Você já pode entrar.","ok");
+    switchTab("login");
+    document.getElementById("user2").value=data.user;
+  }catch(e){ setMsg("Não foi possível conectar ao servidor.","err"); }
+  finally{ setLoading(btn,false,"Criar conta"); }
+}
+
+async function login(){
+  const btn=document.getElementById("btnLogin");
+  const u=document.getElementById("user2").value.trim();
+  const p=document.getElementById("pass2").value;
+  if(!u||!p){ setMsg("Preencha usuário e senha.","err"); return; }
+  setLoading(btn,true);
+  try{
+    const r=await fetch(API+"/login",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({username:u, password:p})
+    });
+    const data=await r.json();
+    if(r.ok && data.msg==="login ok"){
+      setMsg("Login realizado. Redirecionando...","ok");
+      localStorage.setItem("user",data.user);
+      localStorage.setItem("token",data.token);
+      setTimeout(()=>window.location.href="dashboard.html",600);
+    }else{
+      setMsg("Usuário ou senha inválidos.","err");
+    }
+  }catch(e){ setMsg("Não foi possível conectar ao servidor.","err"); }
+  finally{ setLoading(btn,false,"Entrar"); }
+}
+
+document.addEventListener("keydown", e=>{
+  if(e.key!=="Enter") return;
+  const loginActive=document.getElementById("formLogin").classList.contains("active");
+  if(loginActive) login(); else register();
+});
+</script>
+</body>
+</html>
